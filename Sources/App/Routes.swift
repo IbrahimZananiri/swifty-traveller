@@ -2,8 +2,11 @@ import Vapor
 
 final class Routes: RouteCollection {
     let view: ViewRenderer
-    init(_ view: ViewRenderer) {
+    let service: ExpediaService
+    
+    init(view: ViewRenderer, service: ExpediaService) {
         self.view = view
+        self.service = service
     }
 
     func build(_ builder: RouteBuilder) throws {
@@ -14,6 +17,8 @@ final class Routes: RouteCollection {
 
         /// GET /hello/...
         builder.resource("hello", HelloController(view))
+        
+        builder.resource("offers", OffersController(view: view, service: service) )
 
         // response to requests to /info domain
         // with a description of the request

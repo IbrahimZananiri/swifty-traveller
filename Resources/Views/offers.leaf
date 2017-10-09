@@ -30,21 +30,21 @@ to
   
 
     <!-- TODO: Find a way to separate into offer subview file -->
-    <div class="card-deck">
+    <div class="card-columns">
 
     #loop(offers, "offer") {
         
-        <div class="card" >
+        <div class="card">
           <img class="card-img-top" src="#(offer.hotelInfo.hotelImageUrl)" alt="Card image cap">
           <div class="card-body">
             <h6 class="card-title">#(offer.hotelInfo.hotelName)</h6>
             <p>#(offer.hotelInfo.hotelStarRating) ★</p>
             <p class="card-text"><small>#(offer.destination.longName)</small></p>
+          </div>
+          <div class="card-footer text-center">
             <a href="#" class="btn btn-primary btn-sm btn-block">Book Now</a>
-            <p class="text-center">
-              <s>#(envelope.offerInfo.currency) #(offer.hotelPricingInfo.originalPricePerNight)</s>
-              <span style="text-color:green">#(envelope.offerInfo.currency) #(offer.hotelPricingInfo.averagePriceValue)</span>
-            </p>
+            <p><s>#(envelope.offerInfo.currency) #(offer.hotelPricingInfo.originalPricePerNight)</s></p>
+            <p style="color:green">#(envelope.offerInfo.currency) #(offer.hotelPricingInfo.averagePriceValue)</p>
           </div>
         </div>
     }

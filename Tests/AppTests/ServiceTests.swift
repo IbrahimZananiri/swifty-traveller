@@ -9,14 +9,28 @@ import XCTest
 import Foundation
 import Testing
 import HTTP
+import Core
 @testable import Vapor
 @testable import App
 
-/// This file shows an example of testing
-/// routes through the Droplet.
+// FakeResponder is a fake HTTP client type that will be passes to ExpediaService
+// It reads from local json file, builds, and returns a known success Response
+class FakeResponder: Responder {
+    func respond(to request: Request) throws -> Response {
+        let pwd = Core.workingDirectory()
+        guard let data = FileManager.default.contents(atPath: "\(pwd)/Tests/AppTests/fake-response.json") else {
+            throw ResponseError.bytesNotFound
+        }
+        return try Response(status: .ok, body: data.makeBytes())
+    }
+    enum ResponseError: Error {
+        case bytesNotFound
+    }
+}
 
 class ServiceTests: TestCase {
     let drop = try! Droplet.testable()
+    
     
     fileprivate var anOfferFilter: OfferFilter {
         let epoch = Date.init(timeIntervalSince1970: 0)
@@ -41,6 +55,15 @@ class ServiceTests: TestCase {
         XCTAssertEqual(uri.path, "/offers/v2/getOffers")
         XCTAssertEqual(uri.query, "scenario=deal-finder&page=foo&uid=foo&productType=Hotel&destinationName=New%20York&minTripStartDate=1970-01-01&maxTripStartDate=1970-01-02")
     }
+    
+    func testExpediaService() throws {
+        // Initialize an ExpediaService with the fake client
+        let svc: ExpediaService = ExpediaService(client: FakeResponder())
+        let offerRequest = OfferRequest<HotelOffer>(filter: self.anOfferFilter)
+        let envelope: OffersEnvelope<HotelOffer> = try svc.fetchOffersEnvelope(request: offerRequest)
+        XCTAssertNotNil(envelope.offerInfo)
+        XCTAssertEqual(envelope.offers?.count, 5)
+    }
 
 }
 
@@ -53,6 +76,7 @@ extension ServiceTests {
     static let allTests = [
         ("testOfferFilter", testOfferFilter),
         ("testOfferRequest", testOfferRequest),
+        ("testExpediaService", testExpediaService),
         ]
 }
 

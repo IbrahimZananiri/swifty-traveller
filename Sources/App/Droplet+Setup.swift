@@ -4,7 +4,7 @@ import TLS
 
 
 // Make a reusable client, better for performance and testability
-fileprivate func makeClient(drop: Droplet) throws -> ClientProtocol {
+fileprivate func makeClient(drop: Droplet) throws -> Responder {
     
     // Issue with OpenSSL may lead to closing SSL connection,
     // we'll create our own TLS context
@@ -13,11 +13,11 @@ fileprivate func makeClient(drop: Droplet) throws -> ClientProtocol {
     
     // Actually, recreate a new client when called.
     // to avoid detrimental issues.
-    return try drop.client.makeClient(hostname: "offersvc.expedia.com", port: 443, securityLayer: .tls(tlsContext))
+    return try drop.client //.makeClient(hostname: "offersvc.expedia.com", port: 443, securityLayer: .tls(tlsContext))
 }
 
 // Default production Expedia service
-fileprivate func makeExpediaService(client: ClientProtocol) -> ExpediaService {
+fileprivate func makeExpediaService(client: Responder) -> ExpediaService {
     return ExpediaService(client: client)
 }
 

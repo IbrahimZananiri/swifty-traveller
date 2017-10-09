@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import HTTP
+import Vapor
 
 // ExpediaService for interacting with the Expedia API
 // This service can handle mapping and is scalable for other Offerables
@@ -14,10 +14,10 @@ import HTTP
 public class ExpediaService {
     
     // Vapor HTTP Client immutable property
-    private let client: ClientProtocol
+    private let client: Responder
     
     // Initializer with a Vapor client
-    public init(client: ClientProtocol) {
+    public init(client: Responder) {
         self.client = client
     }
     

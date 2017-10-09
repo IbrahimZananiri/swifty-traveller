@@ -16,7 +16,7 @@ This solution interacts with an Expedia publicly-accessible API with live server
 1. `git clone https://github.com/IbrahimZananiri/swifty-traveller`
 2. `cd swifty-traveller`
 3. `docker build -t traveller .`
-4. `docker run --rm -ti -v $(pwd):/vapor -p 8080:8080 traveller vapor build && vapor run`
+4. `docker run --rm -ti -v $(pwd):/vapor -p 8080:8080 traveller swift run`
 
 ### Locally
 1. Install Swift 4.0

@@ -15,14 +15,14 @@ class RouteTests: TestCase {
         try drop
             .testResponse(to: .get, at: "/")
             .assertStatus(is: .ok)
-            .assertBody(contains: "It works")
+            .assertBody(contains: "Welcome!")
     }
-
-    func testHello() throws {
+    
+    func testOffers() throws {
         try drop
-            .testResponse(to: .get, at: "/hello/foo")
+            .testResponse(to: .get, at: "/offers/hotels")
             .assertStatus(is: .ok)
-            .assertBody(contains: "foo")
+            .assertBody(contains: "Hotel Offers")
     }
 
     func testInfo() throws {
@@ -41,7 +41,7 @@ extension RouteTests {
     /// See ./Tests/LinuxMain.swift for examples
     static let allTests = [
         ("testWelcome", testWelcome),
-        ("testHello", testHello),
+        ("testOffers", testOffers),
         ("testInfo", testInfo),
     ]
 }

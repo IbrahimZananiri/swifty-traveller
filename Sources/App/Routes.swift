@@ -18,6 +18,8 @@ final class Routes: RouteCollection {
         /// GET /hello/...
         builder.resource("hello", HelloController(view))
         
+        // GET /offers/:product_type
+        // DI: Takes ExpdiaService instance
         builder.resource("offers", OffersController(view: view, service: service) )
 
         // response to requests to /info domain

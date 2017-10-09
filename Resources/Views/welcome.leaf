@@ -3,8 +3,7 @@
 #export("title") { It works }
 
 #export("content") {
-	<div class="welcome">
-		<img src="/images/it-works.png">
-	</div>
+	<h1>Welcome!</h1>
+    <p>Please navigate to hotels in navigation above</p>
 }
 

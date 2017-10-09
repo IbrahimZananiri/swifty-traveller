@@ -1,0 +1,9 @@
+#export("filter") {
+
+    <form>
+        <input name="destinationName" type="text" placeholder="Enter destination..."/>
+        <input type="submit"/>
+    </form>
+
+
+}

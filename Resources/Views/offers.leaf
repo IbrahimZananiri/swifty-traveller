@@ -1,0 +1,56 @@
+#extend("base")
+
+#export("title") { Hotel Offers }
+
+#export("content") {
+    <h1>#(envelope.productType) Offers</h1>
+
+    <form class="jumbotron">
+      <div class="row">
+        <div class="col">
+          <input class="form-control" name="destinationName" type="text" placeholder="Enter destination..." value="#(filter.destinationName)"/>
+        </div>
+        <!-- 
+        this is problematic in serialization + w/ timezone:
+        <input id="userMinTripStartDate" class="convertible-date" type="date" placeholder="Select date"/>
+        -->
+        <div class="col">
+          <input class="form-control" name="minTripStartDate" type="date" value="#(filter.minTripStartDate)" />
+        </div>
+to
+        <div class="col">
+          <input class="form-control" name="maxTripStartDate" type="date" value="#(filter.maxTripStartDate)" />
+        </div>
+        <div class="col">
+          <input class="btn btn-primary" type="submit" value="Search" />
+        </div>
+      </div>
+    </form>
+    <br>
+  
+
+    <!-- TODO: Find a way to separate into offer subview file -->
+    <div class="card-deck">
+
+    #loop(offers, "offer") {
+        
+        <div class="card" >
+          <img class="card-img-top" src="#(offer.hotelInfo.hotelImageUrl)" alt="Card image cap">
+          <div class="card-body">
+            <h6 class="card-title">#(offer.hotelInfo.hotelName)</h6>
+            <p>#(offer.hotelInfo.hotelStarRating) ★</p>
+            <p class="card-text"><small>#(offer.destination.longName)</small></p>
+            <a href="#" class="btn btn-primary btn-sm btn-block">Book Now</a>
+            <p class="text-center">
+              <s>#(envelope.offerInfo.currency) #(offer.hotelPricingInfo.originalPricePerNight)</s>
+              <span style="text-color:green">#(envelope.offerInfo.currency) #(offer.hotelPricingInfo.averagePriceValue)</span>
+            </p>
+          </div>
+        </div>
+    }
+
+    </div>
+
+
+}
+

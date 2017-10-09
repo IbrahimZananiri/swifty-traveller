@@ -8,49 +8,39 @@
 import Foundation
 import HTTP
 
-public protocol HTTPRequestable {
-    var httpRequest: HTTP.Request { get }
-}
-
-public struct OfferRequest<T> where T : Offerable {
-    
-    let filter: QueryStringable
-    
-    var httpRequest: HTTP.Request {
-        let method = HTTP.Method.get
-        let queryString: String = {
-            var parts: [String] = [
-                "scenario=deal-finder&page=foo&uid=foo",
-                "productType=\(T.productType)",
-            ]
-            if let filterQueryString = filter.queryString {
-                parts.append(filterQueryString)
-            }
-            return parts.joined(separator: "&")
-        }()
-        let uri = URI.init(scheme: "https", userInfo: nil, hostname: "offersvc.expedia.com", port: 443, path: "/offers/v2/getOffers", query: queryString, fragment: nil)
-        return HTTP.Request(method: method, uri: uri)
-    }
-}
+// ExpediaService for interacting with the Expedia API
+// This service can handle mapping and is scalable for other Offerables
 
 public class ExpediaService {
     
+    // Vapor HTTP Client immutable property
     private let client: ClientProtocol
     
+    // Initializer with a Vapor client
     public init(client: ClientProtocol) {
         self.client = client
     }
     
+    // Possible operation errors enum
     public enum OpError: Error {
+        // Thrown when bytes of Response are nil
         case nilBytes
     }
     
-    public func getOffersEnvelope<T>(request: OfferRequest<T>) throws -> OffersEnvelope<T> {
+    // Fetch mapped OffersEnvelope by passing OfferRequest<T : Offerable> (which carries productType
+    // and Filter instance)
+    // Generic T is of Offerable type, e.g. HotelOffer, FlightOffer.
+    // This method can throw.
+    
+    public func fetchOffersEnvelope<T>(request: OfferRequest<T>) throws -> OffersEnvelope<T> {
+        // Ask the client to perform the request
         let response = try client.respond(to: request.httpRequest)
         guard let responseBodyBytes = response.body.bytes else {
             throw OpError.nilBytes
         }
         let responseBodyBytesData = Data(bytes: responseBodyBytes)
+        // OffersEnvelope (and children properties) conform to Decodable protocol
+        // and hence can be decoded. This is a Swift 4.0 feature.
         let envelope = try JSONDecoder().decode(OffersEnvelope<T>.self, from: responseBodyBytesData)
         return envelope
     }

@@ -1,3 +1,4 @@
-[logo]: https://travis-ci.org/IbrahimZananiri/swifty-traveller.svg?branch=master "Build"
+[![Build Status](https://travis-ci.org/IbrahimZananiri/swifty-traveller.svg?branch=master)](https://travis-ci.org/IbrahimZananiri/swifty-traveller)
 
-# My first experience with Swift on the server, with Vapor
+# Overview
+*Traveller* is a project I've built to demonstrate the capabilities of the Swift language on the server.

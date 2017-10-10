@@ -28,7 +28,7 @@ Run `swift test`
 
 ## Demo
 Visit: 
-https://swifty-traveller.herokuapp.com/offers/hotels?destinationName=Miami
+https://swifty-traveller.herokuapp.com/offers/hotels
 
 ## Thought Process
 Outlined in ABOUT: 

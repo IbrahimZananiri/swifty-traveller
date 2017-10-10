@@ -27,8 +27,9 @@ This solution interacts with an Expedia publicly-accessible API with live server
 Run `swift test`
 
 ## Demo
-Visit: 
+Visit:
 https://swifty-traveller.herokuapp.com/offers/hotels
+* Preferrably from a Chrome browser (for HTML5 date input field support)
 
 ## Thought Process
 Outlined in ABOUT: 

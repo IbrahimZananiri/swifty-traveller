@@ -39,12 +39,22 @@ class ExpediaServiceTests: TestCase {
         return filter
     }
     
+    func makeURLComponents(with query: String) -> URLComponents {
+        let url = URL(string: "https://www.google.com?\(query)")!
+        return URLComponents(url: url, resolvingAgainstBaseURL: false)!
+    }
+    
     func testOfferFilter() throws {
         let filter: OfferFilter = self.anOfferFilter
         let filterQueryString: String? = filter.queryString
-        XCTAssertNotNil(filterQueryString)
         let expectedQueryString: String = "destinationName=New%20York&minTripStartDate=1970-01-01&maxTripStartDate=1970-01-02"
-        XCTAssertEqual(filterQueryString, expectedQueryString)
+        XCTAssertNotNil(filterQueryString)
+        
+        let components: URLComponents = makeURLComponents(with: expectedQueryString)
+        XCTAssertNotNil(components)
+        
+        let expectedComponents: URLComponents = makeURLComponents(with: filterQueryString!)
+        XCTAssertEqual(components.queryItems!, expectedComponents.queryItems!)
     }
     
     func testOfferRequest() throws {
@@ -53,7 +63,12 @@ class ExpediaServiceTests: TestCase {
         XCTAssertEqual(uri.scheme, "https")
         XCTAssertEqual(uri.port, 443)
         XCTAssertEqual(uri.path, "/offers/v2/getOffers")
-        XCTAssertEqual(uri.query, "scenario=deal-finder&page=foo&uid=foo&productType=Hotel&destinationName=New%20York&minTripStartDate=1970-01-01&maxTripStartDate=1970-01-02")
+        XCTAssertNotNil(uri.query)
+        
+        let components: URLComponents = makeURLComponents(with: uri.query!)
+        let expectedQueryString = "scenario=deal-finder&page=foo&uid=foo&productType=Hotel&destinationName=New%20York&minTripStartDate=1970-01-01&maxTripStartDate=1970-01-02"
+        let expectedComponents: URLComponents = makeURLComponents(with: expectedQueryString)
+        XCTAssertEqual(components.queryItems!, expectedComponents.queryItems!)
     }
     
     func testExpediaService() throws {

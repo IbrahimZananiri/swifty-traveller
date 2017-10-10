@@ -8,7 +8,7 @@ fileprivate func makeClient(drop: Droplet) throws -> Responder {
     
     // Actually, return drop's HTTP client.
     // to avoid a detrimental issue with SSL.
-    return try drop.client
+    return drop.client
 }
 
 // Default production Expedia service

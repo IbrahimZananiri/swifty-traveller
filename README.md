@@ -29,3 +29,7 @@ Run `swift test`
 ## Demo
 Visit: 
 https://swifty-traveller.herokuapp.com/offers/hotels?destinationName=Miami
+
+## Thought Process
+Outlined in ABOUT: 
+https://github.com/IbrahimZananiri/swifty-traveller/blob/master/ABOUT.md

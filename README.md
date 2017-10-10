@@ -21,8 +21,11 @@ This solution interacts with an Expedia publicly-accessible API with live server
 ### Locally
 1. Install Swift 4.0
 2. `cd swifty-traveller`
-3. `swift run`
+3. `swift run` (or install Vapor and run `vapor build && vapor run`)
 
 ## Testing
 Run `swift test`
 
+## Demo
+Visit: 
+https://swifty-traveller.herokuapp.com/offers/hotels?destinationName=Miami

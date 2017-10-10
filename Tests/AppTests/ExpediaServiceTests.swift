@@ -21,14 +21,14 @@ class FakeResponder: Responder {
         guard let data = FileManager.default.contents(atPath: "\(pwd)/Tests/AppTests/fake-response.json") else {
             throw ResponseError.bytesNotFound
         }
-        return try Response(status: .ok, body: data.makeBytes())
+        return Response(status: .ok, body: data.makeBytes())
     }
     enum ResponseError: Error {
         case bytesNotFound
     }
 }
 
-class ServiceTests: TestCase {
+class ExpediaServiceTests: TestCase {
     let drop = try! Droplet.testable()
     
     
@@ -69,7 +69,7 @@ class ServiceTests: TestCase {
 
 // MARK: Manifest
 
-extension ServiceTests {
+extension ExpediaServiceTests {
     /// This is a requirement for XCTest on Linux
     /// to function properly.
     /// See ./Tests/LinuxMain.swift for examples

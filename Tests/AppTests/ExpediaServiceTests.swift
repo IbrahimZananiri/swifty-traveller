@@ -54,7 +54,7 @@ class ExpediaServiceTests: TestCase {
         XCTAssertNotNil(components)
         
         let expectedComponents: URLComponents = makeURLComponents(with: filterQueryString!)
-        XCTAssertEqual(components.queryItems!, expectedComponents.queryItems!)
+        XCTAssertEqual(components.queryItems!.sorted(by: {$0.name < $1.name}), expectedComponents.queryItems!.sorted(by: {$0.name < $1.name}))
     }
     
     func testOfferRequest() throws {
@@ -68,7 +68,7 @@ class ExpediaServiceTests: TestCase {
         let components: URLComponents = makeURLComponents(with: uri.query!)
         let expectedQueryString = "scenario=deal-finder&page=foo&uid=foo&productType=Hotel&destinationName=New%20York&minTripStartDate=1970-01-01&maxTripStartDate=1970-01-02"
         let expectedComponents: URLComponents = makeURLComponents(with: expectedQueryString)
-        XCTAssertEqual(components.queryItems!, expectedComponents.queryItems!)
+        XCTAssertEqual(components.queryItems!.sorted(by: {$0.name < $1.name}), expectedComponents.queryItems!.sorted(by: {$0.name < $1.name}))
     }
     
     func testExpediaService() throws {
